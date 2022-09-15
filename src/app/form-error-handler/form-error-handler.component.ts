@@ -89,7 +89,7 @@ export class FormErrorHandlerComponent implements OnInit {
       },
       {
         validatorName: 'pattern',
-        message: `Invalid format (required pattern /${this.formControl?.errors?.['pattern']?.['requiredPattern']}/)`
+        message: this.getPatternMessage(this.formControl?.errors?.['pattern']?.['requiredPattern'])
       }
     ];
 
@@ -112,6 +112,15 @@ export class FormErrorHandlerComponent implements OnInit {
     }, [...this.customValidators]);
 
     return this.formControl?.errors ? reducedErrorMessages.filter(err => this.formControl.errors.hasOwnProperty(err.validatorName)) : [];
+  }
+
+  getPatternMessage(requiredPattern: string | RegExp) {
+    switch (requiredPattern) {
+      case '^[a-zA-Z0-9]*$' || /^[a-zA-Z0-9]*$/:
+        return 'Only alphaNumeric characters';
+      default:
+        return `Invalid format (required pattern /${this.formControl?.errors?.['pattern']?.['requiredPattern']}/)`;
+    }
   }
 
   excludedValidatorsHandler(errorArray: ErrorMessage[]): ErrorMessage[] {

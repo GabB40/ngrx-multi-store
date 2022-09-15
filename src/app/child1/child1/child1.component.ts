@@ -24,7 +24,7 @@ export class Child1Component implements OnInit {
 
   ngOnInit(): void {
     this.formDemo = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern('[a]*')]],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8), Validators.pattern('^[a-zA-Z0-9]*$')]],
       version: ['', [Validators.required, smallerThan10(), smallerThan30(), Validators.min(5), Validators.max(99), Validators.pattern('^(0|[1-9][0-9]*)$')]],
       todos: this.formBuilder.array(
         [],
@@ -35,6 +35,7 @@ export class Child1Component implements OnInit {
     this.customValidators = [
       { validatorName: 'smallerThan10', message: 'It\'s smaller than 10' },
       { validatorName: 'smallerThan30', message: 'It\'s smaller than 30' },
+      // { validatorName: 'pattern', message: 'Number should\'nt start with 0' },
       { validatorName: 'required', message: 'It\'s fucking awesome' } // eg: overwrite of a default error message
     ];
   }
